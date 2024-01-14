@@ -2,6 +2,8 @@
 
 Display the time in a floating window using a keymap.
 
+![Preview](https://imgur.com/a/9ZBnHnT)
+
 ## Purpose
 
 Learning the basics about creating a plugin for neovim.
