@@ -14,22 +14,22 @@ Install via package manager.
 
 ```lua
 -- Packer
-	use("rushjs1/clock.nvim")
+use("rushjs1/clock.nvim")
 ```
 
 ```lua
 -- Packer
-	 use({
-		"rushjs1/clock.nvim",
-		config = function()
-			require("clock").setup({
-				keymap = "<space>m",
-				title_pos = "left",
-				window_pos = "center",
-				timeout_duration = 3000,
-			})
-		end,
-	})
+ use({
+    "rushjs1/clock.nvim",
+    config = function()
+        require("clock").setup({
+            keymap = "<space>m",
+            title_pos = "left",
+            window_pos = "center",
+            timeout_duration = 3000,
+        })
+    end,
+})
 
 ```
 
@@ -40,14 +40,14 @@ Example using the default options
 ```lua
 
 -- Call the setup function
-local clock = require("clock").setup({})
+require("clock").setup({})
 ```
 
 Example using custom options
 
 ```lua
 -- Call the setup function and pass the following options
-local clock = require("clock").setup({
+require("clock").setup({
 	keymap = "<space>m", -- keymap used to toggle the window
 	title_pos = "left", -- "left, right or center"
 	window_pos = "center", --"TR(top right) or center"
