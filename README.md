@@ -2,7 +2,7 @@
 
 Display the time in a floating window using a keymap.
 
-![Preview](https://imgur.com/a/9ZBnHnT)
+![Preview](https://i.imgur.com/Dr09AtI.gif)
 
 ## Purpose
 
