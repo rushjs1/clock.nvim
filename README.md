@@ -1,6 +1,6 @@
 # Clock.nvim
 
-Print the time using a keymap.
+Display the time in a floating window using a keymap.
 
 ## Purpose
 
