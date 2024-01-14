@@ -1,16 +1,47 @@
 local M = {}
 
---params to get at setup:
--- keymap to call get_time
--- position of window (northEast or center)
--- timeout enabled (if so, also get timeout duration)
-
 --TODO:
 --docs
 --tests
 --timers?
 
-M.get_time = function()
+--default_options
+--
+--@field keymap string
+--@field title_pos string
+--@field window_pos string
+--@field timeout boolean
+--@field timeout_duration integer
+
+M.default_opts = {
+	keymap = "<space><space>t",
+	title_pos = "center", -- "left, right or center"
+	window_pos = "TR", -- "TR(top right) or center"
+	timeout = true,
+	timeout_duration = 5000,
+}
+
+M.win = nil
+
+M.setup = function(options)
+	M.opts = M.default_opts
+
+	for opt_key, opt_val in pairs(options) do
+		M.opts[opt_key] = opt_val
+	end
+end
+
+M.toggle = function()
+	if M.win and vim.api.nvim_win_is_valid(M.win) and M.opts.timeout == false then
+		-- user doesnt want timeout so just close the window upon toggle
+		vim.api.nvim_win_close(M.win, true)
+		return
+	end
+
+	M._get_time()
+end
+
+M._get_time = function()
 	local d = os.date("%A %B %d")
 	local t = os.date("%I:%M %p")
 	local m = os.date("%p")
@@ -27,34 +58,36 @@ M.get_time = function()
 	local height = #time + 2
 	local title = m == "AM" and "Good Morning" or "Good Afternoon"
 
+	local row
+	local col
+
+	if M.opts.window_pos == "center" then
+		row = math.floor((vim.fn.winheight(0) - height) / 2)
+		col = math.floor((vim.fn.winwidth(0) - width) / 2)
+	else
+		row = 0
+		col = vim.fn.winwidth(0) - width - 4
+	end
+
 	local opts = {
 		relative = "win",
 		width = width,
 		height = height,
-		row = 0,
-		col = vim.fn.winwidth(0) - width - 4,
+		row = row,
+		col = col,
 		style = "minimal",
 		border = "rounded",
 		title = title,
-		title_pos = "center",
+		title_pos = M.opts.title_pos,
 	}
 
-	-- opts for center of screen
-	--[[ local opts = {
-		relative = "win",
-		width = width,
-		height = height,
-		row = math.floor((vim.fn.winheight(0) - height) / 2),
-		col = math.floor((vim.fn.winwidth(0) - width) / 2),
-		style = "minimal",
-		border = "rounded",
-	} ]]
-
-	local win = vim.api.nvim_open_win(buf, false, opts)
+	M.win = vim.api.nvim_open_win(buf, false, opts)
 
 	vim.defer_fn(function()
-		vim.api.nvim_win_close(win, true)
-	end, 5000)
+		vim.api.nvim_win_close(M.win, true)
+
+		M.win = nil
+	end, M.opts.timeout_duration)
 end
 
 return M

@@ -1,4 +1,3 @@
-local C = require("clock")
+local clock = require("clock")
 
---vim.keymap.set("n", "<space><space>t", '<cmd>lua require("clock").get_time()<CR>')
-vim.keymap.set("n", "<space><space>t", C.get_time)
+vim.keymap.set("n", clock.opts.keymap, clock.toggle)
