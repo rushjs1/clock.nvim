@@ -35,6 +35,7 @@ M.toggle = function()
 	if M.win and vim.api.nvim_win_is_valid(M.win) and M.opts.timeout == false then
 		-- user doesnt want timeout so just close the window upon toggle
 		vim.api.nvim_win_close(M.win, true)
+		M.win = nil
 		return
 	end
 
@@ -82,6 +83,10 @@ M._get_time = function()
 	}
 
 	M.win = vim.api.nvim_open_win(buf, false, opts)
+
+	if not M.opts.timeout then
+		return
+	end
 
 	vim.defer_fn(function()
 		vim.api.nvim_win_close(M.win, true)
