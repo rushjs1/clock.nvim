@@ -21,7 +21,7 @@ M.default_opts = {
 	timeout_duration = 5000,
 }
 
-M.win = nil
+M._win = nil
 
 M.setup = function(options)
 	M.opts = M.default_opts
@@ -32,10 +32,10 @@ M.setup = function(options)
 end
 
 M.toggle = function()
-	if M.win and vim.api.nvim_win_is_valid(M.win) and M.opts.timeout == false then
+	if M._win and vim.api.nvim_win_is_valid(M._win) and M.opts.timeout == false then
 		-- user doesnt want timeout so just close the window upon toggle
-		vim.api.nvim_win_close(M.win, true)
-		M.win = nil
+		vim.api.nvim_win_close(M._win, true)
+		M._win = nil
 		return
 	end
 
@@ -47,16 +47,16 @@ M._get_time = function()
 	local t = os.date("%I:%M %p")
 	local m = os.date("%p")
 
-	local time = {
+	M._time = {
 		d,
 		t,
 	}
 
 	local buf = vim.api.nvim_create_buf(false, true)
-	vim.api.nvim_buf_set_lines(buf, 0, -1, false, time)
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, M._time)
 
 	local width = 30
-	local height = #time + 2
+	local height = #M._time + 2
 	local title = m == "AM" and "Good Morning" or "Good Afternoon"
 
 	local row
@@ -82,16 +82,16 @@ M._get_time = function()
 		title_pos = M.opts.title_pos,
 	}
 
-	M.win = vim.api.nvim_open_win(buf, false, opts)
+	M._win = vim.api.nvim_open_win(buf, false, opts)
 
 	if not M.opts.timeout then
 		return
 	end
 
 	vim.defer_fn(function()
-		vim.api.nvim_win_close(M.win, true)
+		vim.api.nvim_win_close(M._win, true)
 
-		M.win = nil
+		M._win = nil
 	end, M.opts.timeout_duration)
 end
 
