@@ -1,0 +1,41 @@
+==============================================================================
+                                                                *clock.nvim*
+
+Display the time in a floating window using a keymap.
+
+
+                                                               *clock.setup({})*
+
+Pass keymap of choice to the setup function. >
+
+
+clock.setup({
+    keymap = "<space>m",
+    title_pos = "right",
+    window_pos = "TR",
+    timeout = true,
+    timeout_duration = 3000,
+})
+<
+
+@field keymap string .. keymap used to toggle the window.
+
+@field title_pos string .. options are "left", "right", or "center"
+
+@field window_pos string .. options are "TR" or center""
+
+@field timeout boolean .. whether you would like a timeout in which the window
+                          will close. 
+@field timeout_duration integer .. length of time in MS in which the timeout
+                                   will last before the window closes.
+
+the default options are.. 
+
+>
+    keymap = "<space><space>t",
+    title_pos = "center", -- "left, right or center"
+    window_pos = "TR", -- "TR(top right) or center"
+    timeout = true,
+    timeout_duration = 5000,
+<
+vim:tw=78:ts=8:ft=help:norl:
