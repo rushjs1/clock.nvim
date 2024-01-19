@@ -1,9 +1,8 @@
 local M = {}
 
 --TODO:
---docs
---tests
 --timers?
+--user command
 
 --default_options
 --
