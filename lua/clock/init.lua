@@ -2,7 +2,6 @@ local M = {}
 
 --TODO:
 --timers?
---user command
 
 --default_options
 --

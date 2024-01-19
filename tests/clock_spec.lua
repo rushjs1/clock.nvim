@@ -2,7 +2,7 @@ local clock = require("clock")
 
 describe("clock", function()
 	before_each(function()
-		clock.win = nil
+		clock._win = nil
 	end)
 
 	it("is loaded", function()
@@ -36,5 +36,12 @@ describe("clock", function()
 	it("opens a window", function()
 		clock.toggle()
 		assert.is_truthy(clock._win)
+	end)
+
+	it("can call the user command", function()
+		vim.defer_fn(function()
+			vim.api.nvim_command("ClockShowTime")
+			assert.is_truthy(clock._win)
+		end, 100)
 	end)
 end)

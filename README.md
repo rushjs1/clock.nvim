@@ -33,13 +33,13 @@ use("rushjs1/clock.nvim")
 
 ```
 
-## Usage
+## Setup & Usage
 
 Example using the default options
 
 ```lua
 
--- Call the setup function
+-- Call the setup function - empty to use defaults
 require("clock").setup({})
 ```
 
@@ -55,6 +55,10 @@ require("clock").setup({
 	timeout_duration = 3000, --duration for the timeout
 })
 ```
+
+## Commands
+
+`:ClockShowTime` Toggle the window.
 
 ## Configuration
 
