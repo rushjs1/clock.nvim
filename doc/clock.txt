@@ -3,23 +3,21 @@
 
 Display the time in a floating window using a keymap.
 
+                                                              *:ClockShowTime*
+
+Command that is used to toggle the window
 
                                                                *clock.setup({})*
 
-Pass keymap of choice to the setup function. >
+Configure the setup function to your liking.  >
 
-
-clock.setup({
-    keymap = "<space>m",
-    title_pos = "right",
-    window_pos = "TR",
-    timeout = true,
-    timeout_duration = 3000,
-})
+    clock.setup({
+        title_pos = "right",
+        window_pos = "TR",
+        timeout = true,
+        timeout_duration = 3000,
+    })
 <
-
-@field keymap string .. keymap used to toggle the window.
-
 @field title_pos string .. options are "left", "right", or "center"
 
 @field window_pos string .. options are "TR" or center""
@@ -31,8 +29,6 @@ clock.setup({
 
 the default options are.. 
 
->
-    keymap = "<space><space>t",
     title_pos = "center", -- "left, right or center"
     window_pos = "TR", -- "TR(top right) or center"
     timeout = true,

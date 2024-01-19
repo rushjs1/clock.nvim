@@ -5,14 +5,12 @@ local M = {}
 
 --default_options
 --
---@field keymap string
 --@field title_pos string
 --@field window_pos string
 --@field timeout boolean
 --@field timeout_duration integer
 
 M.default_opts = {
-	keymap = "<space><space>t",
 	title_pos = "center", -- "left, right or center"
 	window_pos = "TR", -- "TR(top right) or center"
 	timeout = true,

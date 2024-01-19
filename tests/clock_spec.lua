@@ -11,7 +11,6 @@ describe("clock", function()
 
 	it("setup can accept options", function()
 		local defaultOps = {
-			keymap = "<space>m",
 			title_pos = "right",
 			window_pos = "TR",
 			timeout = true,
@@ -19,7 +18,6 @@ describe("clock", function()
 		}
 
 		clock.setup({
-			keymap = "<space>m",
 			title_pos = "right",
 			window_pos = "TR",
 			timeout_duration = 7000,
