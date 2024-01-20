@@ -15,12 +15,18 @@ describe("clock", function()
 			window_pos = "TR",
 			timeout = true,
 			timeout_duration = 7000,
+			timer_opts = {
+				duration = 300,
+			},
 		}
 
 		clock.setup({
 			title_pos = "right",
 			window_pos = "TR",
 			timeout_duration = 7000,
+			timer_opts = {
+				duration = 300,
+			},
 		})
 
 		assert.are.same(defaultOps, clock.opts)

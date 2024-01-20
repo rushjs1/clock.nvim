@@ -1,2 +1,3 @@
+:ClockShowTime	clock.txt	/*:ClockShowTime*
 clock.nvim	clock.txt	/*clock.nvim*
 clock.setup({})	clock.txt	/*clock.setup({})*

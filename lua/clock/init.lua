@@ -15,6 +15,10 @@ M.default_opts = {
 	window_pos = "TR", -- "TR(top right) or center"
 	timeout = true,
 	timeout_duration = 5000,
+	timer_opts = {
+		timer_duration = 600, --(10mins - in seconds)
+		timer_completion_duration = 10000, --(10seconds - in miliseconds)
+	},
 }
 
 M._win = nil
