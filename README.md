@@ -57,7 +57,9 @@ require("clock").setup({
 ## Commands
 
 `:ClockShowTime` Toggle the window.
+
 `:ClockStartTimer` Start the pomodoro timer.
+
 `:ClockToggleTimer` Toggle the timer floating window(timer continues to run in the background). --only when the timer is running.
 
 ```lua
