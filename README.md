@@ -49,18 +49,18 @@ require("clock").setup({
 	timer_opts = {
 		timer_duration = 600, --(10mins - in seconds)
 		timer_completion_duration = 10000, --(10seconds - in miliseconds)
-        timer_title = 'Focus Time' -- title for the floating window of the timer.
+        timer_title = "Focus Time" -- title for the timer floating window
 	},
 })
 ```
 
 ## Commands
 
-`:ClockShowTime` Toggle the window.
+`:ClockShowTime` Toggle the 'time' window.
 
 `:ClockStartTimer` Start the pomodoro timer.
 
-`:ClockToggleTimer` Toggle the timer floating window(timer continues to run in the background).
+`:ClockToggleTimer` Toggle the pomodoro timer floating window(timer continues to run in the background).
 
 ```lua
 keymap.set("n", "<leader><leader>t", ":ClockShowTime<CR>")
@@ -90,7 +90,7 @@ M.default_opts = {
 	timer_opts = {
 		timer_duration = 600, --(10mins - in seconds)
 		timer_completion_duration = 10000, --(10seconds - in miliseconds)
-        timer_title = "Focus Time" -- title for the floating window of the timer.
+        timer_title = "Focus Time" -- title for the timer floating window
 	},
 }
 ```
