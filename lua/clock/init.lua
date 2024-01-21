@@ -18,16 +18,27 @@ M.default_opts = {
 	timer_opts = {
 		timer_duration = 600, --(10mins - in seconds)
 		timer_completion_duration = 10000, --(10seconds - in miliseconds)
+		timer_title = "Focus Time",
 	},
 }
 
 M._win = nil
 
+function foo()
+	print("foo")
+end
+
 M.setup = function(options)
 	M.opts = M.default_opts
 
 	for opt_key, opt_val in pairs(options) do
-		M.opts[opt_key] = opt_val
+		if type(opt_val) == "table" then
+			for nopt_key, nopt_val in pairs(opt_val) do
+				M.opts[opt_key][nopt_key] = nopt_val
+			end
+		else
+			M.opts[opt_key] = opt_val
+		end
 	end
 end
 
@@ -39,10 +50,10 @@ M.toggle = function()
 		return
 	end
 
-	M._get_time()
+	M._show_time()
 end
 
-M._get_time = function()
+M._show_time = function()
 	local d = os.date("%A %B %d")
 	local t = os.date("%I:%M %p")
 	local m = os.date("%p")

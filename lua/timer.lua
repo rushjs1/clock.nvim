@@ -1,5 +1,12 @@
 local clock = require("clock")
 
+--TODO:
+--Cancel active timer
+--Restart active timer
+--Accept duration via user_command param
+--Swap out demo gif on README
+--tests
+
 local M = {}
 
 local timeFormat = "%I:%M:%S %p"
@@ -68,7 +75,6 @@ M._open_win = function(content)
 
 	local width = 40
 	local height = #content + 2
-	local title = "Focus Time"
 
 	local row
 	local col
@@ -89,7 +95,7 @@ M._open_win = function(content)
 		col = col,
 		style = "minimal",
 		border = "rounded",
-		title = title,
+		title = clock.opts.timer_opts.timer_title,
 		title_pos = clock.opts.title_pos,
 	}
 
@@ -97,6 +103,11 @@ M._open_win = function(content)
 end
 
 M.toggle_timer = function()
+	if M._win == nil then
+		print("No timer running.")
+		return
+	end
+
 	if vim.api.nvim_win_is_valid(M._win) then
 		vim.api.nvim_win_close(M._win, true)
 	else
@@ -105,7 +116,7 @@ M.toggle_timer = function()
 end
 
 M._timer_completed = function()
-	print("Focus time completed!")
+	print("Timer Completed!!")
 
 	vim.api.nvim_buf_set_lines(
 		M._buf,
@@ -125,7 +136,6 @@ M._timer_completed = function()
 end
 
 M._clear = function()
-	print("clearing")
 	vim.api.nvim_win_close(M._win, true)
 
 	M._win = nil

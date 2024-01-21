@@ -1,6 +1,6 @@
 # Clock.nvim
 
-Display the time in a floating window using a keymap.
+Display the time or a simple pomodoro timer in a floating window.
 
 ![Preview](https://i.imgur.com/Dr09AtI.gif)
 
@@ -25,7 +25,6 @@ use("rushjs1/clock.nvim")
         require("clock").setup({})
     end,
 })
-
 ```
 
 ## Setup
@@ -47,15 +46,24 @@ require("clock").setup({
 	window_pos = "center", --"TR(top right) or center"
 	timeout = false, --disable the timeout
 	timeout_duration = 3000, --duration for the timeout
+	timer_opts = {
+		timer_duration = 600, --(10mins - in seconds)
+		timer_completion_duration = 10000, --(10seconds - in miliseconds)
+        timer_title = 'Focus Time'
+	},
 })
 ```
 
 ## Commands
 
 `:ClockShowTime` Toggle the window.
+`:ClockStartTimer` Start the pomodoro timer.
+`:ClockToggleTimer` Toggle the timer floating window(timer continues to run in the background). --only when the timer is running.
 
 ```lua
-vim.keymap.set("n", "<leader><leader>t", ":ClockShowTime<CR>")
+keymap.set("n", "<leader><leader>t", ":ClockShowTime<CR>")
+keymap.set("n", "<leader><leader>s", ":ClockStartTimer<CR>")
+keymap.set("n", "<leader><leader>dt", ":ClockToggleTimer<CR>")
 ```
 
 ## Configuration
@@ -67,11 +75,20 @@ vim.keymap.set("n", "<leader><leader>t", ":ClockShowTime<CR>")
 --@field window_pos string
 --@field timeout boolean
 --@field timeout_duration integer
+--@table timer_opts
+--@field timer_duration integer
+--@field timer_completion_duration integer
+--@field timer_title string
 
 M.default_opts = {
 	title_pos = "center", -- "left, right or center"
 	window_pos = "TR", -- "TR(top right) or center"
 	timeout = true, --disable the timeout
 	timeout_duration = 5000,
+	timer_opts = {
+		timer_duration = 600, --(10mins - in seconds)
+		timer_completion_duration = 10000, --(10seconds - in miliseconds)
+        timer_title = "Focus Time"
+	},
 }
 ```

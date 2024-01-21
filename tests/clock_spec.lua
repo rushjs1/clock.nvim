@@ -10,13 +10,15 @@ describe("clock", function()
 	end)
 
 	it("setup can accept options", function()
-		local defaultOps = {
+		local customOpts = {
 			title_pos = "right",
 			window_pos = "TR",
 			timeout = true,
 			timeout_duration = 7000,
 			timer_opts = {
-				duration = 300,
+				timer_duration = 1500,
+				timer_completion_duration = 8000,
+				timer_title = "Focus Time",
 			},
 		}
 
@@ -25,15 +27,16 @@ describe("clock", function()
 			window_pos = "TR",
 			timeout_duration = 7000,
 			timer_opts = {
-				duration = 300,
+				timer_duration = 1500,
+				timer_completion_duration = 8000,
 			},
 		})
 
-		assert.are.same(defaultOps, clock.opts)
+		assert.are.same(customOpts, clock.opts)
 	end)
 
-	it("can get time", function()
-		clock._get_time()
+	it("can show time", function()
+		clock._show_time()
 		assert.are.same(2, #clock._time)
 	end)
 
