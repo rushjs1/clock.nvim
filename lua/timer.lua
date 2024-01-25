@@ -1,7 +1,6 @@
 local clock = require("clock")
 
 --TODO:
---Cancel active timer
 --Restart active timer
 --Accept duration via user_command param
 ------ instead... maybe select duration ??
@@ -55,7 +54,7 @@ M.start = function()
 
 		local info = M.calculate_time()
 
-		M._open_win(info)
+		M._open_win({ content = info })
 
 		return
 	end
@@ -74,12 +73,12 @@ M.calculate_time = function()
 	}
 end
 
-M._open_win = function(content)
+M._open_win = function(args)
 	M._buf = vim.api.nvim_create_buf(false, true)
-	vim.api.nvim_buf_set_lines(M._buf, 0, -1, false, content)
+	vim.api.nvim_buf_set_lines(M._buf, 0, -1, false, args.content)
 
 	local width = 40
-	local height = #content + 2
+	local height = #args.content + 2
 
 	local row
 	local col
@@ -105,6 +104,14 @@ M._open_win = function(content)
 	}
 
 	M._win = vim.api.nvim_open_win(M._buf, false, M._win_opts)
+
+	if not args.close then
+		return
+	end
+
+	vim.defer_fn(function()
+		M._clear()
+	end, 2000)
 end
 
 M.is_timer_running = function()
@@ -117,15 +124,16 @@ end
 
 M.stop = function()
 	if M.is_timer_running() == false then
+		print("No timer running.")
 		return
 	end
 
-	M._clear()
+	M._clear(M._open_win, { content = { "Timer has been stopped..." }, close = true })
 end
 
 M.toggle_timer = function()
 	if M.is_timer_running() == false then
-		print("No Timer running.")
+		print("No timer running.")
 		return
 	end
 
@@ -156,7 +164,7 @@ M._timer_completed = function()
 	end, clock.opts.timer_opts.timer_completion_duration)
 end
 
-M._clear = function()
+M._clear = function(cb, arg)
 	vim.api.nvim_win_close(M._win, true)
 
 	M._win = nil
@@ -167,6 +175,15 @@ M._clear = function()
 	M._startTime = nil
 	M._win_opts = nil
 	M._count = 0
+
+	if not cb then
+		return
+	end
+
+	--wait for the tick to finish
+	vim.defer_fn(function()
+		cb(arg)
+	end, 1000)
 end
 
 return M

@@ -17,6 +17,10 @@ Command that is used to toggle the timer floating window.
 The timer will continue to run in the background.
 This command is only callable if a timer has been started.
 
+                                                             *:ClockStopTimer*
+
+Command to stop and clear the active timer.
+
                                                                *clock.setup({})*
 
 Configure the setup function to your liking.  >
