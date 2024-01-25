@@ -4,6 +4,7 @@ local clock = require("clock")
 --Cancel active timer
 --Restart active timer
 --Accept duration via user_command param
+------ instead... maybe select duration ??
 --Swap out demo gif on README
 --tests
 
@@ -22,6 +23,10 @@ M._buf = nil
 
 M._tick = function()
 	vim.defer_fn(function()
+		if M.is_timer_running() == false then
+			return
+		end
+
 		local content = M.calculate_time()
 
 		if M._remainingTime == "00:00" then
@@ -102,9 +107,25 @@ M._open_win = function(content)
 	M._win = vim.api.nvim_open_win(M._buf, false, M._win_opts)
 end
 
-M.toggle_timer = function()
+M.is_timer_running = function()
 	if M._win == nil then
-		print("No timer running.")
+		return false
+	else
+		return true
+	end
+end
+
+M.stop = function()
+	if M.is_timer_running() == false then
+		return
+	end
+
+	M._clear()
+end
+
+M.toggle_timer = function()
+	if M.is_timer_running() == false then
+		print("No Timer running.")
 		return
 	end
 

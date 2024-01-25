@@ -24,10 +24,6 @@ M.default_opts = {
 
 M._win = nil
 
-function foo()
-	print("foo")
-end
-
 M.setup = function(options)
 	M.opts = M.default_opts
 
