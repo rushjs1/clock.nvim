@@ -21,6 +21,10 @@ This command is only callable if a timer has been started.
 
 Command to stop and clear the active timer.
 
+                                                          *:ClockRestartTimer*
+
+Command to restart the active timer.
+
                                                                *clock.setup({})*
 
 Configure the setup function to your liking.  >

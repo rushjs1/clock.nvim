@@ -64,6 +64,8 @@ require("clock").setup({
 
 `:ClockStopTimer` Stop and clear the pomodoro timer.
 
+`:ClockRestartTimer` Restart the pomodoro timer.
+
 ```lua
 keymap.set("n", "<leader><leader>t", ":ClockShowTime<CR>")
 keymap.set("n", "<leader><leader>s", ":ClockStartTimer<CR>")

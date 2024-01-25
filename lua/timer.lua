@@ -1,7 +1,6 @@
 local clock = require("clock")
 
 --TODO:
---Restart active timer
 --Accept duration via user_command param
 ------ instead... maybe select duration ??
 --Swap out demo gif on README
@@ -111,6 +110,12 @@ M._open_win = function(args)
 
 	vim.defer_fn(function()
 		M._clear()
+
+		if not args.cb then
+			return
+		end
+
+		args.cb()
 	end, 2000)
 end
 
@@ -128,7 +133,16 @@ M.stop = function()
 		return
 	end
 
-	M._clear(M._open_win, { content = { "Timer has been stopped..." }, close = true })
+	M._clear(M._open_win, { content = { "Stopping timer..." }, close = true })
+end
+
+M.restart = function()
+	if M.is_timer_running() == false then
+		print("No timer running.")
+		return
+	end
+
+	M._clear(M._open_win, { content = { "Restarting timer..." }, close = true, cb = M.start })
 end
 
 M.toggle_timer = function()
