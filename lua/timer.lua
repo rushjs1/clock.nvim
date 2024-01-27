@@ -2,7 +2,7 @@ local clock = require("clock")
 
 --TODO:
 --Accept duration via user_command param
------- instead... maybe select duration ??
+------ instead... window to maybe select or enter duration ??
 --Swap out demo gif on README
 --tests
 
@@ -179,7 +179,9 @@ M._timer_completed = function()
 end
 
 M._clear = function(cb, arg)
-	vim.api.nvim_win_close(M._win, true)
+	if M._win ~= nil then
+		vim.api.nvim_win_close(M._win, true)
+	end
 
 	M._win = nil
 	M._buf = nil
