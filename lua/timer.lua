@@ -18,6 +18,24 @@ M._win_opts = nil
 
 M._win = nil
 M._buf = nil
+M._select_buf = nil
+M._select_win = nil
+M._selected_duration = nil
+
+local duration_mapping = {
+	[" 󱥸  1 Minute"] = 60,
+	[" 󱥸  5 Minutes"] = 300,
+	[" 󱥸  10 Minutes"] = 600,
+	[" 󱥸  15 Minutes"] = 900,
+	[" 󱥸  20 Minutes"] = 1200,
+	[" 󱥸  25 Minutes"] = 1500,
+	[" 󱥸  30 Minutes"] = 1800,
+	[" 󱥸  35 Minutes"] = 2100,
+	[" 󱥸  40 Minutes"] = 2400,
+	[" 󱥸  45 Minutes"] = 2700,
+	[" 󱥸  50 Minutes"] = 3000,
+	[" 󱥸  55 Minutes"] = 3300,
+}
 
 M._tick = function()
 	vim.defer_fn(function()
@@ -42,7 +60,7 @@ end
 M.start = function()
 	print("starting timer...")
 
-	local duration = clock.opts.timer_opts.timer_duration
+	local duration = M._selected_duration or clock.opts.timer_opts.timer_duration
 
 	M._count = M._count + 1
 
@@ -119,12 +137,86 @@ M._open_win = function(args)
 	end, 2000)
 end
 
+M.select = function()
+	local content = {
+		" 󱥸  1 Minute",
+		" 󱥸  5 Minutes",
+		" 󱥸  10 Minutes",
+		" 󱥸  15 Minutes",
+		" 󱥸  20 Minutes",
+		" 󱥸  25 Minutes",
+		" 󱥸  30 Minutes",
+		" 󱥸  35 Minutes",
+		" 󱥸  40 Minutes",
+		" 󱥸  45 Minutes",
+		" 󱥸  50 Minutes",
+		" 󱥸  55 Minutes",
+	}
+
+	M._select_buf = vim.api.nvim_create_buf(false, true)
+	vim.api.nvim_buf_set_lines(M._select_buf, 0, -1, false, content)
+
+	vim.api.nvim_buf_set_keymap(
+		M._select_buf,
+		"n",
+		"<CR>",
+		':lua require("timer").on_select()<CR>',
+		{ noremap = true, silent = true }
+	)
+	vim.api.nvim_buf_set_keymap(
+		M._select_buf,
+		"n",
+		"q",
+		':lua require("timer").on_close()<CR>',
+		{ noremap = true, silent = true }
+	)
+
+	local select_win_width = 40
+	local select_win_height = #content + 2
+
+	local select_win_row = math.floor((vim.fn.winheight(0) - select_win_height) / 2)
+	local select_win_col = math.floor((vim.fn.winwidth(0) - select_win_width) / 2)
+
+	local select_opts = {
+		relative = "win",
+		width = select_win_width,
+		height = select_win_height,
+		row = select_win_row,
+		col = select_win_col,
+		style = "minimal",
+		border = "rounded",
+		title = clock.opts.timer_opts.timer_title,
+		title_pos = clock.opts.title_pos,
+	}
+
+	M._select_win = vim.api.nvim_open_win(M._select_buf, true, select_opts)
+end
+
 M.is_timer_running = function()
 	if M._win == nil then
 		return false
 	else
 		return true
 	end
+end
+
+M.on_select = function()
+	local line_selected = vim.fn.getline(".")
+	M._selected_duration = duration_mapping[line_selected]
+
+	M.on_close()
+
+	if M.is_timer_running() == true then
+		M._clear(M._open_win, { content = { "Restarting timer..." }, close = true, cb = M.start })
+
+		M._selected_duration = duration_mapping[line_selected]
+	else
+		M.start()
+	end
+end
+
+M.on_close = function()
+	vim.api.nvim_win_close(M._select_win, true)
 end
 
 M.stop = function()
@@ -191,6 +283,9 @@ M._clear = function(cb, arg)
 	M._startTime = nil
 	M._win_opts = nil
 	M._count = 0
+
+	M._select_buf = nil
+	M._select_win = nil
 
 	if not cb then
 		return

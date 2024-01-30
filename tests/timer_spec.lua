@@ -35,4 +35,10 @@ describe("timer", function()
 
 		assert.are.same(0, timer._count)
 	end)
+
+	it("duration can be selected", function()
+		timer._selected_duration = 900
+		timer.start()
+		assert.are.same(timer._remainingTime, "15:00")
+	end)
 end)

@@ -1,5 +1,7 @@
+:ClockRestartTimer	clock.txt	/*:ClockRestartTimer*
 :ClockShowTime	clock.txt	/*:ClockShowTime*
 :ClockStartTimer	clock.txt	/*:ClockStartTimer*
+:ClockStopTimer	clock.txt	/*:ClockStopTimer*
 :ClockToggleTimer	clock.txt	/*:ClockToggleTimer*
 clock.nvim	clock.txt	/*clock.nvim*
 clock.setup({})	clock.txt	/*clock.setup({})*
