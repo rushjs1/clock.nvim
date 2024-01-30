@@ -7,6 +7,13 @@ Display the time in a floating window using a keymap.
 
 Command that is used to toggle the window.
 
+                                                            *:ClockSelectTime*
+
+Command that is used to open a window and select a 
+duration for the timer. Timer will begin after selection.
+Currently, the default duration of the timer defined 
+in .setup() will be changed as well upon selection.
+
                                                              *:ClockStartTimer*
 
 Command that is used to start the pomodoro timer.
