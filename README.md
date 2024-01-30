@@ -49,7 +49,7 @@ require("clock").setup({
 	timer_opts = {
 		timer_duration = 600, --(10mins - in seconds)
 		timer_completion_duration = 10000, --(10seconds - in miliseconds)
-         timer_title = "Focus Time" -- title for the timer floating window
+        timer_title = "Focus Time" -- title for the timer floating window
 	},
 })
 ```
@@ -96,7 +96,7 @@ M.default_opts = {
 	timer_opts = {
 		timer_duration = 600, --(10mins - in seconds)
 		timer_completion_duration = 10000, --(10seconds - in miliseconds)
-         timer_title = "Focus Time" -- title for the timer floating window
+        timer_title = "Focus Time" -- title for the timer floating window
 	},
 }
 ```
