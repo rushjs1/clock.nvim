@@ -88,16 +88,15 @@ keymap.set("n", "<leader><leader>dt", ":ClockToggleTimer<CR>")
 --@field timer_duration integer
 --@field timer_completion_duration integer
 --@field timer_title string
-
-M.default_opts = {
-	title_pos = "center", -- "left, right or center"
-	window_pos = "TR", -- "TR(top right) or center"
-	timeout = true, --disable the timeout
-	timeout_duration = 5000,
-	timer_opts = {
-		timer_duration = 600, --(10mins - in seconds)
-		timer_completion_duration = 10000, --(10seconds - in miliseconds)
-        timer_title = "Focus Time", -- title for the timer floating window
-	},
+M.default_options = {
+    title_pos = "center", -- "left, right or center"
+    window_pos = "TR", -- "TR(top right) or center"
+    timeout = true, -- disable the timeout
+    timeout_duration = 5000,
+    timer_opts = {
+        timer_duration = 600, --(10mins - in seconds)
+        timer_completion_duration = 10000, --(10seconds - in miliseconds)
+        timer_title = "Focus Time", --title for the timer floating window
+    }
 }
 ```
