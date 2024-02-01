@@ -2,6 +2,7 @@
 
 Display the time or a simple pomodoro timer in a floating window.
 
+![Preview](https://i.imgur.com/Rxi2Fb8.gif)
 ![Preview](https://i.imgur.com/Dr09AtI.gif)
 
 ## Purpose

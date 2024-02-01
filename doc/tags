@@ -1,4 +1,5 @@
 :ClockRestartTimer	clock.txt	/*:ClockRestartTimer*
+:ClockSelectTime	clock.txt	/*:ClockSelectTime*
 :ClockShowTime	clock.txt	/*:ClockShowTime*
 :ClockStartTimer	clock.txt	/*:ClockStartTimer*
 :ClockStopTimer	clock.txt	/*:ClockStopTimer*
