@@ -42,16 +42,17 @@ Example using custom options
 ```lua
 -- Call the setup function and pass the following options
 require("clock").setup({
-	title_pos = "left", -- "left, right or center"
-	window_pos = "center", --"TR(top right) or center"
-	timeout = false, --disable the timeout
-	timeout_duration = 3000, --duration for the timeout
-	timer_opts = {
-		timer_duration = 600, --(10mins - in seconds)
-		timer_completion_duration = 10000, --(10seconds - in miliseconds)
-        timer_title = "Focus Time" -- title for the timer floating window
-	},
+    title_pos = "left", -- "left, right or center"
+    window_pos = "center", -- "TR(top right) or center"
+    timeout = false, -- disable the timeout
+    timeout_duration = 3000, --duration for the timeout
+    timer_opts = {
+        timer_duration = 600, --(10mins - in seconds)
+        timer_completion_duration = 10000, --(10 seconds - in miliseconds)
+        timer_title = "Focus Time", -- title for the timer floating window
+    }
 })
+
 ```
 
 ## Commands
@@ -96,7 +97,7 @@ M.default_opts = {
 	timer_opts = {
 		timer_duration = 600, --(10mins - in seconds)
 		timer_completion_duration = 10000, --(10seconds - in miliseconds)
-        timer_title = "Focus Time" -- title for the timer floating window
+        timer_title = "Focus Time", -- title for the timer floating window
 	},
 }
 ```
