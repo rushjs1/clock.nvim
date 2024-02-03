@@ -25,31 +25,21 @@ M._selected_duration = nil
 local duration_mapping = {}
 
 M.convert_seconds = function(seconds)
-	--TODO: Simplifiy this function
 	local formattedStr
 
-	local _minutes = os.date("%M", seconds)
-	local _seconds = os.date("%S", seconds)
+	local _minutes = math.floor(seconds / 60)
+	local _seconds = seconds % 60
 
-	local tMins = _minutes:gsub("^0+", "")
-	local tSeconds = _seconds:gsub("^0+", "")
+	local pluralize = function(value, unit)
+		return value .. (value == 1 and " " .. unit or " " .. unit .. "s")
+	end
 
-	if tMins == "" and tSeconds ~= "" then
-		-- only seconds
-
-		formattedStr = tSeconds .. (tSeconds == "1" and " Second" or " Seconds")
-	elseif tSeconds == "" and tMins ~= "" then
-		--only mins
-
-		formattedStr = tMins .. (tMins == "1" and " Minute" or " Minutes")
+	if _minutes == 0 then
+		formattedStr = pluralize(_seconds, "Second")
+	elseif _seconds == 0 then
+		formattedStr = pluralize(_minutes, "Minute")
 	else
-		--both
-
-		formattedStr = tMins
-			.. (tMins == "1" and " Minute" or " Minutes")
-			.. " and "
-			.. tSeconds
-			.. (tSeconds == "1" and " Second" or " Seconds")
+		formattedStr = pluralize(_minutes, "Minute") .. " and " .. pluralize(_seconds, "Second")
 	end
 
 	return formattedStr
