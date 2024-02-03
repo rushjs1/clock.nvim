@@ -2,7 +2,7 @@ local clock = require("clock")
 
 --TODO:
 --Accept duration via user_command param
------- instead... window to maybe select or enter duration ??
+---- allow user to define extra duration selections??
 --Swap out demo gif on README
 --tests
 
@@ -22,20 +22,48 @@ M._select_buf = nil
 M._select_win = nil
 M._selected_duration = nil
 
-local duration_mapping = {
-	[" 󱥸  1 Minute"] = 60,
-	[" 󱥸  5 Minutes"] = 300,
-	[" 󱥸  10 Minutes"] = 600,
-	[" 󱥸  15 Minutes"] = 900,
-	[" 󱥸  20 Minutes"] = 1200,
-	[" 󱥸  25 Minutes"] = 1500,
-	[" 󱥸  30 Minutes"] = 1800,
-	[" 󱥸  35 Minutes"] = 2100,
-	[" 󱥸  40 Minutes"] = 2400,
-	[" 󱥸  45 Minutes"] = 2700,
-	[" 󱥸  50 Minutes"] = 3000,
-	[" 󱥸  55 Minutes"] = 3300,
-}
+local duration_mapping = {}
+
+M.convert_seconds = function(seconds)
+	--TODO: Simplifiy this function
+	local formattedStr
+
+	local _minutes = os.date("%M", seconds)
+	local _seconds = os.date("%S", seconds)
+
+	local tMins = _minutes:gsub("^0+", "")
+	local tSeconds = _seconds:gsub("^0+", "")
+
+	if tMins == "" and tSeconds ~= "" then
+		-- only seconds
+
+		formattedStr = tSeconds .. (tSeconds == "1" and " Second" or " Seconds")
+	elseif tSeconds == "" and tMins ~= "" then
+		--only mins
+
+		formattedStr = tMins .. (tMins == "1" and " Minute" or " Minutes")
+	else
+		--both
+
+		formattedStr = tMins
+			.. (tMins == "1" and " Minute" or " Minutes")
+			.. " and "
+			.. tSeconds
+			.. (tSeconds == "1" and " Second" or " Seconds")
+	end
+
+	return formattedStr
+end
+
+M.set_duration_mappings = function()
+	for _, val in ipairs(clock.opts.timer_opts.timer_selections) do
+		local timeStr = M.convert_seconds(val)
+
+		table.insert(duration_mapping, { text = " 󱥸  " .. timeStr, value = val })
+	end
+end
+
+M.set_duration_mappings()
 
 M._tick = function()
 	vim.defer_fn(function()
@@ -138,20 +166,10 @@ M._open_win = function(args)
 end
 
 M.select = function()
-	local content = {
-		" 󱥸  1 Minute",
-		" 󱥸  5 Minutes",
-		" 󱥸  10 Minutes",
-		" 󱥸  15 Minutes",
-		" 󱥸  20 Minutes",
-		" 󱥸  25 Minutes",
-		" 󱥸  30 Minutes",
-		" 󱥸  35 Minutes",
-		" 󱥸  40 Minutes",
-		" 󱥸  45 Minutes",
-		" 󱥸  50 Minutes",
-		" 󱥸  55 Minutes",
-	}
+	local content = {}
+	for _, value in ipairs(duration_mapping) do
+		table.insert(content, value.text)
+	end
 
 	M._select_buf = vim.api.nvim_create_buf(false, true)
 	vim.api.nvim_buf_set_lines(M._select_buf, 0, -1, false, content)
@@ -200,16 +218,25 @@ M.is_timer_running = function()
 	end
 end
 
+M.set_duration = function(line_selected)
+	for _, value in ipairs(duration_mapping) do
+		if value.text == line_selected then
+			M._selected_duration = value.value
+		end
+	end
+end
+
 M.on_select = function()
 	local line_selected = vim.fn.getline(".")
-	M._selected_duration = duration_mapping[line_selected]
+
+	M.set_duration(line_selected)
 
 	M.on_close()
 
 	if M.is_timer_running() == true then
 		M._clear(M._open_win, { content = { "Restarting timer..." }, close = true, cb = M.start })
 
-		M._selected_duration = duration_mapping[line_selected]
+		M.set_duration(line_selected)
 	else
 		M.start()
 	end

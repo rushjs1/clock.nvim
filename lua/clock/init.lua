@@ -19,6 +19,20 @@ M.default_opts = {
 		timer_duration = 600, --(10mins - in seconds)
 		timer_completion_duration = 10000, --(10seconds - in miliseconds)
 		timer_title = "Focus Time",
+		timer_selections = {
+			60,
+			300,
+			600,
+			900,
+			1200,
+			1500,
+			1800,
+			2100,
+			2400,
+			2700,
+			3000,
+			3300,
+		},
 	},
 }
 
