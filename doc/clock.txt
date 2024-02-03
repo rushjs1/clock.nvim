@@ -44,6 +44,14 @@ Configure the setup function to your liking.  >
 	timer_opts = {
 		timer_duration = 600, --(10mins - in seconds)
 		timer_completion_duration = 10000, --(10seconds - in miliseconds)
+                timer_duration_selections = { -- define durations(in seconds) for the selection window for the timer
+			20, -- 20 Seconds
+			300, -- 5 Minutes
+			600, -- 10 Minutes
+			900, -- 15 Minutes
+			1200, -- 20 Minutes
+			1820, -- 30 Minutes and 20 Seconds
+           }
 	},
     })
 <
@@ -63,6 +71,11 @@ Configure the setup function to your liking.  >
 @field timer_completion_duration integer .. duration in which the floating
                                             window will last upon completion.
 
+@field timer_duration_selections table .. table for defining custom durations
+                                          for the selection window.. will override
+                                          all default selections
+
+
 
 the default options are.. 
 
@@ -72,5 +85,19 @@ the default options are..
     timeout_duration = 5000,
         timer_duration = 600, --(10mins - in seconds)
         timer_completion_duration = 10000, --(10seconds - in miliseconds)
+        timer_duration_selections = { -- define durations(in seconds) for the selection window for the timer
+                              60,
+                              300,
+                              600,
+                              900,
+                              1200,
+                              1500,
+                              1800,
+                              2100,
+                              2400,
+                              2700,
+                              3000,
+                              3300,
+           }
 
 vim:tw=78:ts=8:ft=help:norl:
