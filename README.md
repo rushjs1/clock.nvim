@@ -50,6 +50,14 @@ require("clock").setup({
         timer_duration = 600, --(10mins - in seconds)
         timer_completion_duration = 10000, --(10 seconds - in miliseconds)
         timer_title = "Focus Time", -- title for the timer floating window
+        timer_duration_selections = { -- define durations(in seconds) for the selection window for the timer
+			20, -- 20 Seconds
+			300, -- 5 Minutes
+			600, -- 10 Minutes
+			900, -- 15 Minutes
+			1200, -- 20 Minutes
+			1820, -- 30 Minutes and 20 Seconds
+        }
     }
 })
 
@@ -88,6 +96,8 @@ keymap.set("n", "<leader><leader>dt", ":ClockToggleTimer<CR>")
 --@field timer_duration integer
 --@field timer_completion_duration integer
 --@field timer_title string
+--@field timer_duration_selections table
+
 M.default_options = {
     title_pos = "center", -- "left, right or center"
     window_pos = "TR", -- "TR(top right) or center"
@@ -97,6 +107,20 @@ M.default_options = {
         timer_duration = 600, --(10mins - in seconds)
         timer_completion_duration = 10000, --(10seconds - in miliseconds)
         timer_title = "Focus Time", --title for the timer floating window
+        timer_duration_selections = { -- define durations(in seconds) for the selection window for the timer
+			60,
+			300,
+			600,
+			900,
+			1200,
+			1500,
+			1800,
+			2100,
+			2400,
+			2700,
+			3000,
+			3300,
+        }
     }
 }
 ```

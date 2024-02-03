@@ -56,7 +56,7 @@ M.convert_seconds = function(seconds)
 end
 
 M.set_duration_mappings = function()
-	for _, val in ipairs(clock.opts.timer_opts.timer_selections) do
+	for _, val in ipairs(clock.opts.timer_opts.timer_duration_selections) do
 		local timeStr = M.convert_seconds(val)
 
 		table.insert(duration_mapping, { text = " 󱥸  " .. timeStr, value = val })

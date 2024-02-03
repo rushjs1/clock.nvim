@@ -9,6 +9,7 @@ local M = {}
 --@field window_pos string
 --@field timeout boolean
 --@field timeout_duration integer
+--@field timer_duration_selections table
 
 M.default_opts = {
 	title_pos = "center", -- "left, right or center"
@@ -19,7 +20,7 @@ M.default_opts = {
 		timer_duration = 600, --(10mins - in seconds)
 		timer_completion_duration = 10000, --(10seconds - in miliseconds)
 		timer_title = "Focus Time",
-		timer_selections = {
+		timer_duration_selections = {
 			60,
 			300,
 			600,
