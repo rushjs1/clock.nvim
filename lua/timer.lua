@@ -1,9 +1,11 @@
 local clock = require("clock")
 
 --TODO:
+--supports hours *****
 --Accept duration via user_command param
----- allow user to define extra duration selections??
---Swap out demo gif on README
+--Notification updates
+----Sounds?
+----further customizations
 --tests
 
 local M = {}

@@ -67,15 +67,15 @@ require("clock").setup({
 
 `:ClockShowTime` Toggle the 'time' window.
 
-`:ClockStartTimer` Start the pomodoro timer.
-
 `:ClockSelectTime` Opens the window to select a duration for the timer.
 
-`:ClockToggleTimer` Toggle the pomodoro timer floating window(timer continues to run in the background).
+`:ClockRestartTimer` Restart the pomodoro timer.
 
 `:ClockStopTimer` Stop and clear the pomodoro timer.
 
-`:ClockRestartTimer` Restart the pomodoro timer.
+`:ClockStartTimer` Start the pomodoro timer (uses default or duration defined in setup).
+
+`:ClockToggleTimer` Toggle the pomodoro timer floating window(timer continues to run in the background).
 
 ```lua
 keymap.set("n", "<leader><leader>t", ":ClockShowTime<CR>")
