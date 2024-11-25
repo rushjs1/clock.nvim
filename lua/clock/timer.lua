@@ -1,5 +1,3 @@
-local clock = require("clock")
-
 --TODO:
 --supports hours *****
 --Accept duration via user_command param
@@ -26,6 +24,11 @@ M._selected_duration = nil
 
 local duration_mapping = {}
 
+M.setup = function(opts)
+	M.opts = vim.tbl_deep_extend("force", {}, opts or {})
+	M.set_duration_mappings()
+end
+
 M.convert_seconds = function(seconds)
 	local formattedStr
 
@@ -48,14 +51,12 @@ M.convert_seconds = function(seconds)
 end
 
 M.set_duration_mappings = function()
-	for _, val in ipairs(clock.opts.timer_opts.timer_duration_selections) do
+	for _, val in ipairs(M.opts.timer_opts.timer_duration_selections) do
 		local timeStr = M.convert_seconds(val)
 
 		table.insert(duration_mapping, { text = " 󱥸  " .. timeStr, value = val })
 	end
 end
-
-M.set_duration_mappings()
 
 M._tick = function()
 	vim.defer_fn(function()
@@ -80,7 +81,7 @@ end
 M.start = function()
 	print("starting timer...")
 
-	local duration = M._selected_duration or clock.opts.timer_opts.timer_duration
+	local duration = M._selected_duration or M.opts.timer_opts.timer_duration
 
 	M._count = M._count + 1
 
@@ -120,7 +121,7 @@ M._open_win = function(args)
 	local row
 	local col
 
-	if clock.opts.window_pos == "center" then
+	if M.opts.window_pos == "center" then
 		row = math.floor((vim.fn.winheight(0) - height) / 2)
 		col = math.floor((vim.fn.winwidth(0) - width) / 2)
 	else
@@ -136,8 +137,8 @@ M._open_win = function(args)
 		col = col,
 		style = "minimal",
 		border = "rounded",
-		title = clock.opts.timer_opts.timer_title,
-		title_pos = clock.opts.title_pos,
+		title = M.opts.timer_opts.timer_title,
+		title_pos = M.opts.title_pos,
 	}
 
 	M._win = vim.api.nvim_open_win(M._buf, false, M._win_opts)
@@ -170,14 +171,14 @@ M.select = function()
 		M._select_buf,
 		"n",
 		"<CR>",
-		':lua require("timer").on_select()<CR>',
+		':lua require("clock.timer").on_select()<CR>',
 		{ noremap = true, silent = true }
 	)
 	vim.api.nvim_buf_set_keymap(
 		M._select_buf,
 		"n",
 		"q",
-		':lua require("timer").on_close()<CR>',
+		':lua require("clock.timer").on_close()<CR>',
 		{ noremap = true, silent = true }
 	)
 
@@ -195,8 +196,8 @@ M.select = function()
 		col = select_win_col,
 		style = "minimal",
 		border = "rounded",
-		title = clock.opts.timer_opts.timer_title,
-		title_pos = clock.opts.title_pos,
+		title = M.opts.timer_opts.timer_title,
+		title_pos = M.opts.title_pos,
 	}
 
 	M._select_win = vim.api.nvim_open_win(M._select_buf, true, select_opts)
@@ -286,7 +287,7 @@ M._timer_completed = function()
 
 	vim.defer_fn(function()
 		M._clear()
-	end, clock.opts.timer_opts.timer_completion_duration)
+	end, M.opts.timer_opts.timer_completion_duration)
 end
 
 M._clear = function(cb, arg)
