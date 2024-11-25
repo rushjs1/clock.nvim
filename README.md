@@ -12,14 +12,25 @@ Learning the basics about creating a plugin for neovim.
 
 Install via package manager.
 
+Using [lazy.nvim](https://github.com/folke/lazy.nvim)
+
 ```lua
--- Packer
+-- plugins/clock.lua
+return {
+    "rushjs1/clock.nvim",
+    event = "VeryLazy",
+}
+```
+
+Using [packer.nvim](https://github.com/wbthomason/packer.nvim)
+
+```lua
 use("rushjs1/clock.nvim")
 ```
 
 ```lua
 -- Packer
- use({
+use({
     "rushjs1/clock.nvim",
     config = function()
         require("clock").setup({})
@@ -29,17 +40,42 @@ use("rushjs1/clock.nvim")
 
 ## Setup
 
-Example using the default options
+No need to call setup when using default options
 
-```lua
-
--- Call the setup function - empty to use defaults
-require("clock").setup({})
-```
+For custom options using Lazy.nvim, please only use `opts`. Calling `setup` is only necessary when using custom options with packer.
 
 Example using custom options
 
 ```lua
+-- Lazy.nvim
+-- plugins/clock.lua
+return {
+  "rushjs1/clock.nvim",
+  event = "VeryLazy",
+  opts = {
+    title_pos = "left", -- "left, right or center"
+    window_pos = "center", -- "TR(top right) or center"
+    timeout = false, -- disable the timeout
+    timeout_duration = 3000, --duration for the timeout
+    timer_opts = {
+      timer_duration = 600, --(10mins - in seconds)
+      timer_completion_duration = 10000, --(10 seconds - in miliseconds)
+      timer_title = "Focus Time", -- title for the timer floating window
+      timer_duration_selections = { -- define durations(in seconds) for the selection window for the timer
+        20, -- 20 Seconds
+        300, -- 5 Minutes
+        600, -- 10 Minutes
+        900, -- 15 Minutes
+        1200, -- 20 Minutes
+        1820, -- 30 Minutes and 20 Seconds
+      },
+    },
+  },
+}
+```
+
+```lua
+-- Packer.nvim
 -- Call the setup function and pass the following options
 require("clock").setup({
     title_pos = "left", -- "left, right or center"
